@@ -16,7 +16,7 @@ jobs:
     - name: Build 
       run: dotnet build --configuration Release
     - name: Test C#
-      run: dotnet test ./tst/BitHack.CSharp.Tests/BitHack.CSharp.Tests.fsproj
+      run: dotnet test ./tst/BitHack.CSharp.Tests/BitHack.CSharp.Tests.csproj
     - name: Test F#
       run: dotnet test ./tst/BitHack.Tests/BitHack.Tests.fsproj
     - name: Build NuGet Package
