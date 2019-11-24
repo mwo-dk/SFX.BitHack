@@ -23,6 +23,7 @@ jobs:
       run: 
         dotnet pack ./src/BitHack.CSharp/BitHack.CSharp.csproj --configuration Release -o ./nuget
     - name: Build F# Nuget Package
+      run:
         dotnet pack ./src/BitHack/BitHack.fsproj --configuration Release -o ./nuget
     - name: Deplo C# NuGet Package
       run: 
