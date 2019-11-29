@@ -31,4 +31,3 @@ jobs:
     - name: Deploy F# NuGet Package
       run:  
         dotnet nuget push /home/runner/work/SFX.BitHack/SFX.BitHack/nuget/SFX.BitHack.1.0.4.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
-
