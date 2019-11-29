@@ -6,7 +6,7 @@
 
     <RootNamespace>SFX.BitHack</RootNamespace>
     <PackageId>SFX.BitHack</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <IsPackable>true</IsPackable>
 
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -23,6 +23,10 @@
 
   <ItemGroup>
     <Compile Include="Library.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="dingir.png" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
   <ItemGroup>

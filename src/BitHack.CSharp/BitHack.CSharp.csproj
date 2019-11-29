@@ -6,7 +6,7 @@
     <RootNamespace>SFX.BitHack.CSharp</RootNamespace>
 
     <PackageId>SFX.BitHack.CSharp</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <IsPackable>true</IsPackable>
 
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -23,6 +23,10 @@
 
   <ItemGroup>
     <PackageReference Include="System.Memory" Version="4.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="dingir.png" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>
