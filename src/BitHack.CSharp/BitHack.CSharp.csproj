@@ -6,7 +6,7 @@
     <RootNamespace>SFX.BitHack.CSharp</RootNamespace>
 
     <PackageId>SFX.BitHack.CSharp</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <IsPackable>true</IsPackable>
 
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -17,7 +17,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/mwo-dk/SFX.BitHack</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mwo-dk/SFX.BitHack</RepositoryUrl>
-    <PackageIconUrl>dingir.png</PackageIconUrl>
+    <PackageIcon>dingir.png</PackageIcon>
     <PackageTags>bit array</PackageTags>
   </PropertyGroup>
 
