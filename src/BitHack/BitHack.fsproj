@@ -17,6 +17,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/mwo-dk/SFX.BitHack</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mwo-dk/SFX.BitHack</RepositoryUrl>
+    <PackageIconUrl>dingir.png</PackageIconUrl>
     <PackageTags>bit array F#</PackageTags>
   </PropertyGroup>
 
