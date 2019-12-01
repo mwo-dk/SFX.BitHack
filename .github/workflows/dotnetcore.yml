@@ -27,4 +27,5 @@ jobs:
         dotnet pack ./src/BitHack/BitHack.fsproj --configuration Release -o ./nuget
     - name: Deploy NuGet Packages
       run:
-        dotnet nuget push /home/runner/work/SFX.BitHack/SFX.BitHack/nuget/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
+        dotnet nuget push /home/runner/work/SFX.BitHack/SFX.BitHack/nuget/SFX.BitHack.1*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
+        dotnet nuget push /home/runner/work/SFX.BitHack/SFX.BitHack/nuget/SFX.BitHack.CSharp.1*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
