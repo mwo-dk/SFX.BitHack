@@ -19,16 +19,3 @@ jobs:
       run: dotnet test ./tst/BitHack.CSharp.Tests/BitHack.CSharp.Tests.csproj
     - name: Test F#
       run: dotnet test ./tst/BitHack.Tests/BitHack.Tests.fsproj
-    - name: Build C# NuGet Package
-      run: 
-        dotnet pack ./src/BitHack.CSharp/BitHack.CSharp.csproj --configuration Release -o ./nuget
-    - name: Build F# Nuget Package
-      run:
-        dotnet pack ./src/BitHack/BitHack.fsproj --configuration Release -o ./nuget
-    - name: Deploy NuGet C# Package
-      run:
-        dotnet nuget push /home/runner/work/SFX.BitHack/SFX.BitHack/nuget/SFX.BitHack.CSharp.*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
-    - name: Deploy NuGet F# Package
-      run:
-        dotnet nuget push /home/runner/work/SFX.BitHack/SFX.BitHack/nuget/SFX.BitHack.*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
-
