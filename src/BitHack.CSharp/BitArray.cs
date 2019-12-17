@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using static SFX.BitHack.CSharp.BitArrayAccessError;
+using SFX.ROP.CSharp;
+using static SFX.ROP.CSharp.Library;
 
 namespace SFX.BitHack.CSharp
 {
@@ -13,6 +14,9 @@ namespace SFX.BitHack.CSharp
 	/// </summary>
 	public sealed class BitArray : IEnumerable<bool>
     {
+        private static IndexOutOfRangeException IndexOutOfRange =
+            new IndexOutOfRangeException();
+
         private BitArray() { }
 
         internal readonly int Length;
@@ -54,11 +58,11 @@ namespace SFX.BitHack.CSharp
         /// </summary>
         /// <param name="n">The position of the value</param>
         /// <returns>The boolean value of the <paramref name="n"/>th position</returns>
-        public BitArrayAccessResult<bool> Get(int n)
+        public Result<bool> Get(int n)
         {
             var (ok, result) = Data.GetSafe(Length, n);
-            return ok ? new BitArrayAccessResult<bool>(default, result) :
-                new BitArrayAccessResult<bool>(IndexOutOfRange, default);
+            return ok ? Succeed(result) :
+                Fail<bool>(IndexOutOfRange);
         }
 
         /// <summary>
@@ -67,11 +71,11 @@ namespace SFX.BitHack.CSharp
         /// <param name="n">The position of the value</param>
         /// <param name="value">The value</param>
         /// <returns>True if n is a valid position. Else false</returns>
-        public BitArrayAccessResult<Unit> Set(int n, bool value)
+        public Result<Unit> Set(int n, bool value)
         {
             var ok = Data.SetSafe(Length, n, value);
-            return ok ? new BitArrayAccessResult<Unit>(default, Unit.Value) :
-                new BitArrayAccessResult<Unit>(IndexOutOfRange, default);
+            return ok ? Succeed(Unit.Value) :
+                Fail<Unit>(IndexOutOfRange);
         }
 
         /// <summary>
@@ -81,11 +85,11 @@ namespace SFX.BitHack.CSharp
         /// <param name="from">First index in the range</param>
         /// <param name="to">Last index in the range</param>
         /// <returns>True if all bits are set</returns>
-        public BitArrayAccessResult<bool> GetRange(int from, int to)
+        public Result<bool> GetRange(int from, int to)
         {
             var (ok, result) = Data.GetRangeSafe(Length, from, to);
-            return ok ? new BitArrayAccessResult<bool>(default, result) :
-                new BitArrayAccessResult<bool>(IndexOutOfRange, default);
+            return ok ? Succeed(result) :
+                Fail<bool>(IndexOutOfRange);
         }
 
         /// <summary>
@@ -97,11 +101,11 @@ namespace SFX.BitHack.CSharp
         /// <param name="to">Last index in the range</param>
         /// <param name="value">Flag telling whether to set or clear the bits in the range</param>
         /// <returns>True if the index range is valid. Else false</returns>
-        public BitArrayAccessResult<Unit> SetRange(int from, int to, bool value)
+        public Result<Unit> SetRange(int from, int to, bool value)
         {
             var ok = Data.SetRangeSafe(Length, from, to, value);
-            return ok ? new BitArrayAccessResult<Unit>(default, Unit.Value) :
-                new BitArrayAccessResult<Unit>(IndexOutOfRange, default);
+            return ok ? Succeed(Unit.Value) :
+                Fail<Unit>(IndexOutOfRange);
         }
 
         /// <summary>
