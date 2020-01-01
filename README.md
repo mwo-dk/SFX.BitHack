@@ -32,11 +32,11 @@ which throw ```ArgumentOutOfRangeException``` in the case of the provided ```len
 Individual bits are accessed via the accessors
 
 ``` csharp
-Get(int n) -> BitArrayAccessResult<bool>
-Set(int n, bool value) -> BitArrayAccessResult<Unit>
+Get(int n) -> Result<bool>
+Set(int n, bool value) -> Result<Unit>
 ```
 
-See the discussion of BitArrayAccessResult<> below. The type ```Unit``` is a type embracing ```void```, and is shortly described below.
+See the discussion of Result<> below. The type ```Unit``` is a type embracing ```void```, and is shortly described below.
 
 Reading an item in the bit array, can be done in three ways:
 
@@ -46,16 +46,16 @@ var x = new BitArray(size);
 var result = x.Get(n);
 ```
 
-Here result is then a ```BitArrayAccessResult<bool> whose members can be inspected. The method does not throw any exceptions, instead the members ```Error``` and ```Value``` can be inspected. BitArrayAccessResult<> also supports tuple 
+Here result is then a ```Result<bool> whose members can be inspected. The method does not throw any exceptions, instead the members ```Error``` and ```Value``` can be inspected. Result<> also supports tuple 
 deconstruction, so another way is:
 
 ``` csharp
 var x = new BitArray(size);
 ...
-var (error, value) = x.Get(n);
+var (value, error) = x.Get(n);
 ```
 
-where the ```error``` then is a ```Nullable<BitArrayAccessError>``` and value is a ```Nullable<bool>```. The last way is to utilize the implicitcasting of ```BitArrayAccessResult<bool>``` to ```bool```:
+where the ```error``` then is an ```IndexOutOfRangeException``` and value is a ```bool```. The last way is to utilize the implicitcasting of ```BitArrayAccessResult<bool>``` to ```bool```:
 
 ``` csharp
 var x = new BitArray(size);
@@ -79,15 +79,15 @@ var x = new BitArray(size);
 var result = x.Set(n, true);
 ```
 
-Here result is then a ```BitArrayAccessResult<Unit> whose members can be inspected. The method does not throw any exceptions, instead the members ```Error``` and ```Value``` can be inspected. Again, since BitArrayAccessResult<> supports tuple deconstruction, so another way is:
+Here result is then a ```Result<Unit> whose members can be inspected. The method does not throw any exceptions, instead the members ```Error``` and ```Value``` can be inspected. Again, since ```Result<>``` supports tuple deconstruction, so another way is:
 
 ``` csharp
 var x = new BitArray(size);
 ...
-var (error, value) = x.Set(n, true);
+var (value, error) = x.Set(n, true);
 ```
 
-where the ```error``` then is a ```Nullable<BitArrayAccessError>``` and value is a ```Nullable<Unit>```. The last way is to utilize the implicitcasting of ```BitArrayAccessResult<Unit>``` to ```Unit```:
+where the ```error``` then is an ```IndexOutOfRangeExcention``` and value is a ```Unit```. The last way is to utilize the implicitcasting of ```Result<Unit>``` to ```Unit```:
 
 ``` csharp
 var x = new BitArray(size);
@@ -108,8 +108,8 @@ catch (InvalidCasatException _) {
 Accessing ranges of bits, are done via:
 
 ``` csharp
-GetRange(int from, int to) -> BitArrayAccessResult<bool>
-SetRange(int from, int to, bool value) -> BitArrayAccessResult<Unit>
+GetRange(int from, int to) -> Result<bool>
+SetRange(int from, int to, bool value) -> Result<Unit>
 ```
 
 That works similarly to the indivual bit item accessors.
@@ -139,13 +139,15 @@ Lastly the bitwise operators, that are expected for arrays of bits are implement
 
 Which implements (immutable, but not atomic) inversion, bitwise or, bitwise and as well as bitwise exclusive or respectively.
 
-### BitArrayAccessResult<>
+### Result<>
 
-As mentioned above, the accessor methods, do not directly return void (setting values) or bool (getting values). Instead these operations return a BitArrayAccessResult<> - a value type, that contains two get-only properties, who can be inspected. It can be utilized in two (or three) ways:
+As mentioned above, the accessor methods, do not directly return void (setting values) or bool (getting values). Instead these operations return a Result<> - a value type, that contains two get-only properties, who can be inspected. It can be utilized in two (or three) ways:
 
 * Read the value and inspect the properties, that are both nullable.
 * Utilize tuple deconstruction - as shown above
 * Directly casting the result to the bool or ```Unit``` type and rely on exceptions to be thrown in case of access violation.
+
+This type - like ```Unit``` is defined in [SFX.ROP.CSharp.Types](https://www.nuget.org/packages/SFX.ROP.CSharp.Types/).
 
 ### BitVectorHelpers
 
@@ -185,10 +187,6 @@ The core logic of accessing and modifying arrays of bits represented by 64 bit s
 * ```Xor(this long[] x, long[] y, long[] result) -> void``` performs a bitwise exclusive or of ```x``` and ```y``` and writes the result in ```result```. No validation occurs.
 * ```XorSafe(this long[] x, long[] y, long[] result) -> bool```, similar to ```Xor```, but does validation of parameters but validates parameters and returns the success of the operation.
 * ```Format(this long[] vectors, int size) -> string``` formats ```vectors``` to a readable format.
-
-### Unit
-
-The class ```Unit``` is a representation of ```void``` such that methods can utilize ```BitArrayAccessResult<>``` even in the case of not returning a result. Similar to the type [```Unit```](https://github.com/jbogard/MediatR/blob/master/src/MediatR/Unit.cs) in Jimmy Bogards [MediatR](https://www.nuget.org/packages/MediatR/) package.
 
 ## Usage F#
 
